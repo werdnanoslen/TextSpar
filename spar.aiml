@@ -1,0 +1,281 @@
+<aiml version="1.0">
+
+<!-- SETUP -->
+<category>
+	<pattern>LOAD AIML B</pattern>
+	<template>
+		What is your name?
+		<think><set name="stance">mid block</set></think>
+	</template>
+</category>
+<category>
+	<pattern>*</pattern>
+	<that>WHAT IS YOUR NAME</that>
+	<template>
+		<think><set name="name"><star /></set></think>
+		Well <get name="name" />, this is the end for you. Fight me!
+	</template>
+</category>
+<category>
+	<pattern></pattern>
+	<that>WHAT IS YOUR NAME</that>
+	<template>
+		<think><set name="name">nameless stranger</set></think>
+		Well <get name="name" />, this is the end for you. Fight me!
+	</template>
+</category>
+<!-- END SETUP -->
+
+
+<!-- ACTIONS -->
+<category>
+	<pattern>TOUCHE</pattern>
+	<template>
+	<condition>
+	<li name="action" value="">
+	<random>
+		<li>AH! That hurt!</li>
+		<li>OW! Who taught you that intimidating move?</li>
+	</random>
+	</li>
+	<li>
+	<random>
+		<li>AH! That <get name="action" /> hurt!</li> 
+		<li>OW! Who taught you that intimidating <get name="action" />?</li>
+	</random>
+	</li>
+	</condition>
+	<think><set name="action"></set></think>
+	</template>
+</category>
+<category>
+	<pattern>MISSED</pattern>
+	<template>
+	<condition>
+	<li name="action" value="">
+	<random>
+		<li>I saw that coming high, and I easily dodged it.</li>
+		<li>Whoa! You definitely missed that wild strike.</li>
+	</random>
+	Aim carefully, <get name="name" />!
+	</li>
+	<li>
+	<random>
+		<li>I saw that <get name="action" /> coming high, and I easily dodged it.</li>
+		<li>Whoa! You definitely missed that wild low <get name="action" />.</li>
+	</random>
+	Aim carefully, <get name="name" />!
+	</li>
+	</condition>
+	<think><set name="action"></set></think>
+	</template>
+</category>
+<category>
+	<pattern>BLOCKED</pattern>
+	<template>
+		My <get name="stance" /> stance is solid, and your attack was so simple I could read that with my eyes closed. Blocked!
+		<think><set name="action"></set></think>
+	</template>
+</category>
+<category>
+	<pattern>STANCE</pattern>
+	<template>
+		I'm standing in a solid <get name="stance" /> stance.
+	</template>
+</category>
+<!-- END ACTIONS -->
+
+
+<!-- DIRECTION -->
+<category>
+	<pattern>TOUCHE H</pattern>
+	<template>
+		<condition name="stance" value="high block">
+			<srai>BLOCKED</srai>
+		</condition>
+		<condition name="stance" value="mid block">
+			<srai>TOUCHE</srai>
+			<think><set name="stance">high block</set></think>
+		</condition>
+		<condition name="stance" value="low block">
+			<think><set name="stance">high block</set></think>
+			<srai>TOUCHE</srai>
+		</condition>
+	</template>
+</category>
+<category>
+        <pattern>TOUCHE M</pattern>
+        <template>
+                <condition name="stance" value="mid block">
+                        <srai>BLOCKED</srai>
+                </condition>
+                <condition name="stance" value="high block">
+                        <think><set name="stance">mid block</set></think>
+			<srai>TOUCHE</srai>
+                </condition>
+		<condition name="stance" value="low block">
+                        <think><set name="stance">mid block</set></think>
+                        <srai>TOUCHE</srai>
+                </condition>
+        </template>
+</category>
+<category>
+        <pattern>TOUCHE L</pattern>
+        <template>
+                <condition name="stance" value="low block">
+                        <srai>BLOCKED</srai>
+                </condition>
+                <condition name="stance" value="high block">
+               		<think><set name="stance">low block</set></think>
+			<srai>TOUCHE</srai>
+                </condition>
+                <condition name="stance" value="mid block">
+                        <think><set name="stance">low block</set></think>
+                        <srai>TOUCHE</srai>
+                </condition>	
+        </template>
+</category>
+<!-- END DIRECTION -->
+
+
+<!-- FIGHTIN WORDS -->
+<category><pattern>_ PUNCH _ LOW</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE L</srai></template></category>
+<category><pattern>LOW _ PUNCH</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE LOW</srai></template></category>
+<category><pattern>_ KICK _ LOW</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE LOW</srai></template></category>
+<category><pattern>LOW _ KICK</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE LOW</srai></template></category>
+
+<category><pattern>_ LOW</pattern><template><srai>TOUCHE L</srai></template></category>
+<category><pattern>LOW _</pattern><template><srai>TOUCHE LOW</srai></template></category>
+<category><pattern>_ LOW _</pattern><template><srai>TOUCHE L</srai></template></category>
+
+<category><pattern>_ PUNCH _ LOW</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE L</srai></template></category>
+<category><pattern>LOW _ PUNCH</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE LOW</srai></template></category>
+<category><pattern>_ KICK _ LOW</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE LOW</srai></template></category>
+<category><pattern>LOW _ KICK</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE LOW</srai></template></category>
+
+<category><pattern>_ PUNCH _ MID</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE M</srai></template></category>
+<category><pattern>MID _ PUNCH</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE MID</srai></template></category>
+<category><pattern>KICK _ MID</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE MID</srai></template></category>
+<category><pattern>MID _ KICK</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE MID</srai></template></category>
+
+<category><pattern>_ MID</pattern><template><srai>TOUCHE M</srai></template></category>
+<category><pattern>MID _</pattern><template><srai>TOUCHE M</srai></template></category>
+<category><pattern>_ MID _</pattern><template><srai>TOUCHE M</srai></template></category>
+
+<category><pattern>_ PUNCH _ HIGH</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE H</srai></template></category>
+<category><pattern>HIGH _ PUNCH</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE H</srai></template></category>
+<category><pattern>KICK _ HIGH</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE H</srai></template></category>
+<category><pattern>HIGH _ KICK</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE H</srai></template></category>
+
+<category><pattern>_ HIGH</pattern><template><srai>TOUCHE H</srai></template></category>
+<category><pattern>HIGH _</pattern><template><srai>TOUCHE H</srai></template></category>
+<category><pattern>_ HIGH _</pattern><template><srai>TOUCHE H</srai></template></category>
+
+<category><pattern>PUNCH FACE</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE H</srai></template></category>
+<category><pattern>_ PUNCH _ FACE</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE H</srai></template></category>
+<category><pattern>FACE _ PUNCH</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE H</srai></template></category>
+<category><pattern>_ KICK _ FACE</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE H</srai></template></category>
+<category><pattern>FACE _ KICK</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE H</srai></template></category>
+
+<category><pattern>_ FACE</pattern><template><srai>TOUCHE H</srai></template></category>
+<category><pattern>FACE _</pattern><template><srai>TOUCHE H</srai></template></category>
+<category><pattern>_ FACE _</pattern><template><srai>TOUCHE H</srai></template></category>
+
+<category><pattern>_ PUNCH _ BODY</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE M</srai></template></category>
+<category><pattern>BODY _ PUNCH</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE M</srai></template></category>
+<category><pattern>_ KICK _ BODY</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE M</srai></template></category>
+<category><pattern>BODY _ KICK</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE M</srai></template></category>
+
+<category><pattern>_ BODY</pattern><template><srai>TOUCHE M</srai></template></category>
+<category><pattern>BODY _</pattern><template><srai>TOUCHE M</srai></template></category>
+<category><pattern>_ BODY _</pattern><template><srai>TOUCHE M</srai></template></category>
+
+<category><pattern>_ PUNCH _ LEGS</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE L</srai></template></category>
+<category><pattern>LEGS _ PUNCH</pattern><template><think><set name="action">punch</set></think><srai>TOUCHE L</srai></template></category>
+<category><pattern>_ KICK _ LEGS</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE L</srai></template></category>
+<category><pattern>LEGS _ KICK</pattern><template><think><set name="action">kick</set></think><srai>TOUCHE L</srai></template></category>
+
+<category><pattern>_ LEGS</pattern><template><srai>TOUCHE L</srai></template></category>
+<category><pattern>LEGS _</pattern><template><srai>TOUCHE L</srai></template></category>
+<category><pattern>_ LEGS _</pattern><template><srai>TOUCHE L</srai></template></category>
+
+<category><pattern>_ STANCE</pattern><template><srai>STANCE</srai></template></category>
+<category><pattern>STANCE _</pattern><template><srai>STANCE</srai></template></category>
+<category><pattern>_ STANCE _</pattern><template><srai>STANCE</srai></template></category>
+
+<category><pattern>HIT</pattern><template><srai>MISSED</srai></template></category>
+<category><pattern>_ HIT</pattern><template><srai>MISSED</srai></template></category>
+<category><pattern>HIT _</pattern><template><srai>MISSED</srai></template></category>
+<category><pattern>_ HIT _</pattern><template><srai>MISSED</srai></template></category>
+
+<category><pattern>PUNCH</pattern><template><think><set name="action">punch</set></think><srai>MISSED</srai></template></category>
+<category><pattern>_ PUNCH</pattern><template><think><set name="action">punch</set></think><srai>MISSED</srai></template></category>
+<category><pattern>PUNCH _</pattern><template><think><set name="action">punch</set></think><srai>MISSED</srai></template></category>
+<category><pattern>_ PUNCH _</pattern><template><think><set name="action">punch</set></think><srai>MISSED</srai></template></category>
+
+<category><pattern>KICK</pattern><template><think><set name="action">kick</set></think><srai>MISSED</srai></template></category>
+<category><pattern>_ KICK</pattern><template><think><set name="action">kick</set></think><srai>MISSED</srai></template></category>
+<category><pattern>KICK _</pattern><template><think><set name="action">kick</set></think><srai>MISSED</srai></template></category>
+<category><pattern>_ KICK _</pattern><template><think><set name="action">kick</set></think><srai>MISSED</srai></template></category>
+<!--END FIGHTIN WORDS -->
+
+
+<!-- CATCHALLS -->
+<category>
+	<pattern>HOW _</pattern>
+	<template>
+		Punch me, kick me, something! Come on!
+	</template>
+</category>
+<category>
+	<pattern>TAUNT</pattern>
+	<template>
+		<random>
+			<li>What, you think I'm here to chat, <get name="name" />? Fight me!</li>
+			<li>While you're trying to chat, I'm lining up my next shot!</li>
+			<li>Oh yes, let's just stop fighting and talk. I'll start: you're open. *lunges*</li>
+		</random>
+	</template>
+</category>
+<category>
+	<pattern>TRY</pattern>
+	<template>Stop trying to hit me, and hit me!</template>
+</category>
+<category>
+	<pattern>* TRY *</pattern>
+	<template><srai>TRY</srai></template>
+</category>
+<category>
+	<pattern>*</pattern>
+	<that>_ TAUGHT YOU THAT INTIMIDATING _</that>
+	<template>
+		<think><set name="tempstar"><lowercase><star /></lowercase></set></think>
+	<condition>
+	<li name="tempstar" value="you">
+		Well, I taught you well. I'm starting to enjoy this!
+	</li>
+	<li name="tempstar" value="me">
+		Well, you taught yourself well. I'm starting ot enjoy this!
+	</li>
+	<li>
+		Well, <person2><get name="tempstar" /></person2> taught you well. I'm starting at enjoy this!
+	</li>
+	</condition>
+	</template>
+</category>
+<category>
+	<pattern>FIGHT</pattern>
+	<template>Come on, give me your best shot!</template>
+</category>
+<category>
+	<pattern>*</pattern>
+	<that>_ GIVE ME YOUR _</that>
+	<template><srai>TAUNT</srai></template>
+</category>
+<category>
+	<pattern>*</pattern>
+	<template><srai>FIGHT</srai></template>
+</category>
+<!-- END CATCHALLS -->
+
+</aiml>
